@@ -44,6 +44,9 @@ func main() {
 func philos(id int, delay time.Duration, forkL chan bool, forkR chan bool) {
 	var timesEaten = 0
 	for {
+		// Every time the philosopher tries to take an action, a coinflip is made to determine if it will eat or think
+		// This is done to prevent deadlocks, by making sure that all philosiphers will probably take different actions than their neightbours
+		// And if they do all somehow try to eat at the same time, it will result in them all flipping a new coin in the next cycle
 		if rand.Intn(2) == 0 && timesEaten < 5 {
 			// Decided to try to eat
 			var hasEaten = eat(delay, forkL, forkR)
@@ -67,6 +70,8 @@ func philos(id int, delay time.Duration, forkL chan bool, forkR chan bool) {
 	}
 }
 
+// true represents a fork that is not available to be picked up
+// false represents a fork that is available to be picked up
 func eat(delay time.Duration, forkL chan bool, forkR chan bool) bool {
 	var pickedUp = <-forkR
 	if pickedUp { // The fork on the right is already taken

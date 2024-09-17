@@ -1,1 +1,3 @@
-Dinner!
+Every time the philosopher tries to take an action, a coinflip is made to determine if it will eat or think
+This is done to prevent deadlocks, by making sure that all philosiphers will probably take different actions than their neightbours
+And if they do all somehow try to eat at the same time, it will result in them all flipping a new coin in the next cycle
